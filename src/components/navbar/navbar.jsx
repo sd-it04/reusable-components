@@ -1,24 +1,27 @@
 import React, { useState, useMemo } from 'react';
+import classnames from 'classnames';
 import './style.css'; 
 
 const Navbar = () => {
-  let navbar_tabs = ['home', 'profile', 'message', 'photos'];
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const renderNavTab = useMemo(() => navbar_tabs.map((item, index) => {
-    /*const dynaActiveClassName = className({
-      'list',
-      selectedIndex === index ? 'active' : null,
-    });*/
-    return (<li className='list {selectedIndex === index ? "active" : ""}'>
-      <a href='#' onClick={setSelectedIndex(index)}>
+  const renderNavTab = useMemo(() =>
+    ['home', 'profile', 'message', 'photos'].map((item, index) => {
+    const dynaActiveClassName = classnames(
+      'list', {
+        'active': selectedIndex === index,
+      },
+    );
+
+    return (<li className={dynaActiveClassName} key='key-{item}-{index}'>
+      <a href='#' onClick={() => setSelectedIndex(index)}>
         <span className='icon'>
           <ion-icon name='{item}-outline'></ion-icon>
         </span>
         <span className='text'>{item}</span>
       </a>
     </li>)
-  }), [setSelectedIndex]);
+  }), [selectedIndex]);
 
   return (
     <div className='navigation'>
